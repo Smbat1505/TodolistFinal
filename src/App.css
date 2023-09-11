@@ -1,0 +1,42 @@
+.App {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    margin: 100px auto;
+}
+
+.App > div {
+    margin-right: 50px;
+}
+
+
+.error {
+    border: red 1px solid;
+}
+
+.error-message {
+    color: red;
+}
+
+.active-filter {
+    padding: 3px 7px;
+    background-color: #161656;
+    color: white;
+}
+
+.checkbox {
+    box-shadow: none;
+    padding: 2px;
+    background: none;
+    fill: rgb(6, 43, 193);
+}
+
+
+.add-button, .active-filters {
+    padding: 3px 7px;
+}
+
+.task-completed {
+    opacity: .4;
+    text-decoration: line-through;
+}
