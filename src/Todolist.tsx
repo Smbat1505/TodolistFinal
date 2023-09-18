@@ -71,6 +71,13 @@ export const Todolist: React.FC<TodolistPropsType> = (
         updateTask(todolistID, taskID, newTitle)
     }
 
+    const handleOnChangeCheckbox = (taskId: string) => {
+        return (e: ChangeEvent<HTMLInputElement>) => {
+            let newIsDoneValue = e.currentTarget.checked;
+            changeTaskStatus(todolistID, taskId, newIsDoneValue);
+        }
+    }
+
 
     return (
 
@@ -93,22 +100,20 @@ export const Todolist: React.FC<TodolistPropsType> = (
                         removeTask(todolistID, task.id)
                     }
 
-                    function handleOnChangeCheckbox(e: ChangeEvent<HTMLInputElement>) {
-                        let newIsDoneValue = e.currentTarget.checked;
-                        changeTaskStatus(todolistID, task.id, newIsDoneValue);
-                    }
+                    // function handleOnChangeCheckbox(e: ChangeEvent<HTMLInputElement>) {
+                    //     let newIsDoneValue = e.currentTarget.checked;
+                    //     changeTaskStatus(todolistID, task.id, newIsDoneValue);
+                    // }
                     return (
                         <li
                             key={task.id}
                             className={task.isDone ? 'task-completed' : ''}
 
                         >
-                            <Input
-                                type="checkbox"
-                                checked={task.isDone}
-                                onChange={handleOnChangeCheckbox}
-                            />
-                            <EditableSpan oldTitle={task.title} onChange={ (newTitle) => handleUpdateTask(task.id, newTitle)}/>
+
+                            <Input type={"checkbox"} checked={task.isDone} onChange={handleOnChangeCheckbox(task.id)}/>
+                            <EditableSpan oldTitle={task.title}
+                                          onChange={(newTitle) => handleUpdateTask(task.id, newTitle)}/>
                             {/*<span>{task.title}</span>*/}
                             <Button
                                 className={'checkbox'}
