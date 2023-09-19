@@ -1,6 +1,7 @@
 import {TaskType} from "../Todolist";
 import {TasksStateType} from "../App";
 import {v1} from "uuid";
+import {AddTodolistACType, RemoveTodolistACType} from "./todolistsReducer";
 
 const initialState: TasksStateType = {}
 
@@ -31,7 +32,6 @@ export const taskReducer = (state: TasksStateType = initialState, action: RootAC
 
             return changeTaskStatus
         }
-
         case "UPDATE_TASK": {
             const {todolistID, taskID, newTitle} = action.payload;
             const updateTask = {
@@ -40,6 +40,32 @@ export const taskReducer = (state: TasksStateType = initialState, action: RootAC
             }
             return updateTask
         }
+        case "ADD_TODOLIST": {
+            const {todolistID} = action.payload
+            return {
+                ...state,
+                [todolistID]: []
+            }
+        }
+        case "REMOVE_TODOLIST": {
+            // const {id} = action.payload;
+            // const updatedState = {...state};
+            // delete updatedState[id];
+            // return updatedState;
+
+            const {id} = action.payload;
+            const {[id]: _, ...newState} = state;
+            return newState;
+
+            // TODO In this approach:
+            //
+            //     We use object destructuring to extract the property with the specified id from the state. The _ (underscore) variable is used as a throwaway variable to ignore the property's value.
+            //
+            // We use the rest/spread operator (...) to create a new object with all properties from the original state except for the one with the specified id.
+            //
+            //     This way, you can remove a specific todolistID without modifying the original state object and without using an index signature.
+        }
+
         default : {
             return state
         }
@@ -47,7 +73,13 @@ export const taskReducer = (state: TasksStateType = initialState, action: RootAC
 }
 
 
-type RootACType = RemoveTaskACType | AddTaskACType | ChangeTaskStatusACType | UpdateTaskACType;
+type RootACType =
+    RemoveTaskACType
+    | AddTaskACType
+    | ChangeTaskStatusACType
+    | UpdateTaskACType
+    | AddTodolistACType
+    | RemoveTodolistACType;
 type RemoveTaskACType = ReturnType<typeof removeTaskAC>
 type AddTaskACType = ReturnType<typeof addTaskAC>
 type ChangeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>
