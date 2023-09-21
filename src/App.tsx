@@ -87,6 +87,7 @@ function App() {
     // если удалить то filter
 
     function addTodolist(title: string) {
+        debugger
         const action = addTodolistAC(title)
         dispatchTodolists(action)
     }
@@ -110,14 +111,11 @@ function App() {
                 let tasksForTodolist = tasks[todo.id];
                 if (todo.filter === 'active') {
                     tasksForTodolist = tasks[todo.id].filter(task => !task.isDone)
-                    console.log(tasksForTodolist)
                 }
                 if (todo.filter === 'completed') {
                     tasksForTodolist = tasks[todo.id].filter(task => task.isDone)
-                    console.log(tasksForTodolist)
                 }
 
-                console.log(tasksForTodolist)
                 return (
                     <Todolist
                         key={todo.id}

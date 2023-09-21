@@ -73,7 +73,7 @@ export const taskReducer = (state: TasksStateType = initialState, action: RootAC
 }
 
 
-type RootACType =
+export type RootACType =
     RemoveTaskACType
     | AddTaskACType
     | ChangeTaskStatusACType

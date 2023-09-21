@@ -78,7 +78,6 @@ export const Todolist: React.FC<TodolistPropsType> = (
         }
     }
 
-
     return (
 
 
