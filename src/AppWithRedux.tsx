@@ -38,6 +38,8 @@ function AppWithReducer() {
     const todolistId1 = v1();
     const todolistId2 = v1();
 
+    // let state = useSelector<AppRootStateType, AppRootStateType>(state => state);
+    // const todolists = state.todolist;
     const todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolist)
     // const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
