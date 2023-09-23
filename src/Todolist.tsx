@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useState} from 'react';
 import {Input} from "./components/Input";
 import {Button} from "./components/Button";
 import "./todolist.css"
@@ -27,7 +27,7 @@ export type TodolistPropsType = {
 }
 
 
-export const Todolist: React.FC<TodolistPropsType> = (
+export const Todolist: React.FC<TodolistPropsType> = memo((
     {
         todolistID,
         title,
@@ -43,39 +43,48 @@ export const Todolist: React.FC<TodolistPropsType> = (
     }
 ) => {
 
-    function handleAllClick() {
+    const handleAllClick = useCallback(() => {
         changeFilter(todolistID, 'all')
-    }
+    }, [changeFilter, todolistID])
 
-    function handleActiveClick() {
+    const handleActiveClick = useCallback(() => {
         changeFilter(todolistID, 'active')
-    }
+    }, [changeFilter, todolistID])
 
-    function handleCompletedClick() {
+    const handleCompletedClick = useCallback(() => {
         changeFilter(todolistID, 'completed')
-    }
+    }, [changeFilter, todolistID])
 
-    function handleRemoveTodolist() {
+    const handleRemoveTodolist = useCallback(() => {
         removeTodolist(todolistID);
-    }
+    }, [removeTodolist, todolistID])
 
-    const handleAddTask = (newTodoTitle: string) => {
+    const handleAddTask = useCallback((newTodoTitle: string) => {
         addTask(todolistID, newTodoTitle)
-    };
+    }, [addTask, todolistID]);
 
-    const handleUpdateTodolistTitle = (newTitle: string) => {
+    const handleUpdateTodolistTitle = useCallback((newTitle: string) => {
         updateTodolistTitle(todolistID, newTitle)
-    }
+    }, [updateTodolistTitle, todolistID])
 
-    const handleUpdateTask = (taskID: string, newTitle: string) => {
+    const handleUpdateTask = useCallback((taskID: string, newTitle: string) => {
         updateTask(todolistID, taskID, newTitle)
-    }
+    }, [updateTask, todolistID])
 
-    const handleOnChangeCheckbox = (taskId: string) => {
+    const handleOnChangeCheckbox = useCallback((taskId: string) => {
         return (e: ChangeEvent<HTMLInputElement>) => {
             let newIsDoneValue = e.currentTarget.checked;
             changeTaskStatus(todolistID, taskId, newIsDoneValue);
         }
+    }, [changeTaskStatus, todolistID])
+
+
+    let TASKS = tasks;
+    if (filter === 'active') {
+        TASKS = TASKS.filter(task => !task.isDone)
+    }
+    if (filter === 'completed') {
+        TASKS = TASKS.filter(task => task.isDone)
     }
 
     return (
@@ -94,7 +103,7 @@ export const Todolist: React.FC<TodolistPropsType> = (
             </h3>
             <AddItemForm callback={handleAddTask}/>
             <ul>
-                {tasks.map(task => {
+                {TASKS.map(task => {
                     function handleOnClick() {
                         removeTask(todolistID, task.id)
                     }
@@ -147,4 +156,4 @@ export const Todolist: React.FC<TodolistPropsType> = (
             </div>
         </div>
     )
-}
+})

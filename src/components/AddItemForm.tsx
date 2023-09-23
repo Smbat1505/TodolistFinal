@@ -1,19 +1,21 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import {Input} from "./Input";
 import {Button} from "./Button";
 
 
-type AddItemFormPropsType = {
-    callback: ( valueTitle: string) => void;
+export type AddItemFormPropsType = {
+    callback: (valueTitle: string) => void;
 
 }
-const AddItemForm: React.FC<AddItemFormPropsType> = ({ callback}) => {
+const AddItemForm: React.FC<AddItemFormPropsType> = memo(({callback}) => {
+
+    // console.log('rerender: AddItemForm')
     const [valueTitle, setValueTitle] = useState('');
     const [error, setError] = useState<string | null>(null);
 
     function handleAddTask() {
         if (valueTitle.trim() !== '') {
-            callback( valueTitle.trim())
+            callback(valueTitle.trim())
             setValueTitle('')
         } else {
             setError('Title is required!!!')
@@ -25,7 +27,7 @@ const AddItemForm: React.FC<AddItemFormPropsType> = ({ callback}) => {
     }
 
     function handleOnKeyDown(e: KeyboardEvent<HTMLInputElement>) {
-        setError(null)
+        if (error) setError(null)
         if (e.key === 'Enter') {
             handleAddTask()
         }
@@ -48,6 +50,6 @@ const AddItemForm: React.FC<AddItemFormPropsType> = ({ callback}) => {
             {error && <div className={'error-message'}>{error}</div>}
         </div>
     )
-}
+})
 
 export default AddItemForm;

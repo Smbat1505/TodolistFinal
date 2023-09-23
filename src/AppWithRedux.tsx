@@ -1,4 +1,4 @@
-import React, {Reducer, useReducer, useState} from 'react';
+import React, {Reducer, useCallback, useReducer, useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
@@ -41,7 +41,7 @@ function AppWithReducer() {
     // let state = useSelector<AppRootStateType, AppRootStateType>(state => state);
     // const todolists = state.todolist;
     const todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolist)
-    // const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
     function removeTask(todolistID: string, taskID: string) {
@@ -49,11 +49,11 @@ function AppWithReducer() {
         dispatch(action)
     }
 
-    function addTask(todolistID: string, title: string) {
+    const addTask = useCallback((todolistID: string, title: string) => {
         const action = addTaskAC(todolistID, title)
         dispatch(action)
 
-    }
+    }, [dispatch])
 
     function changeTaskStatus(todolistID: string, taskID: string, isDone: boolean) {
         const action = changeTaskStatusAC(todolistID, taskID, isDone)
@@ -75,11 +75,11 @@ function AppWithReducer() {
     // если нужно что-то поменять то мар
     // если удалить то filter
 
-    function addTodolist(title: string) {
+    const addTodolist = useCallback((title: string) => {
         // debugger
         const action = addTodolistAC(title)
         dispatch(action)
-    }
+    }, [dispatch])
 
     const updateTask = (todolistID: string, taskID: string, newTitle: string) => {
         const action = updateTaskAC(todolistID, taskID, newTitle)
@@ -97,7 +97,17 @@ function AppWithReducer() {
             <AddItemForm callback={addTodolist}/>
             {todolists.map(todo => {
                 return (
-                    <TodolistWithRedux todolist={todo}/>
+                    <TodolistWithRedux key={todo.id} todolist={todo}/>
+                    // <Todolist
+                    //     key={todo.id}
+                    //     todolistID={todo.id}
+                    //     title={todo.title}
+                    //     tasks={tasks[todo.id]}
+                    //     removeTask={removeTask}
+                    //     changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeTaskStatus}
+                    //     filter={todo.filter} removeTodolist={removeTodolist} updateTask={updateTask}
+                    //     updateTodolistTitle={updateTodolistTitle}
+                    // />
                 )
             })}
         </div>

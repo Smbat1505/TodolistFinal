@@ -117,20 +117,13 @@ function AppWithReducer() {
 
             <AddItemForm callback={addTodolist}/>
             {todolists.map(todo => {
-                let tasksForTodolist = tasks[todo.id];
-                if (todo.filter === 'active') {
-                    tasksForTodolist = tasks[todo.id].filter(task => !task.isDone)
-                }
-                if (todo.filter === 'completed') {
-                    tasksForTodolist = tasks[todo.id].filter(task => task.isDone)
-                }
 
                 return (
                     <Todolist
                         key={todo.id}
                         todolistID={todo.id}
                         title={todo.title}
-                        tasks={tasksForTodolist}
+                        tasks={tasks[todo.id]}
                         removeTask={removeTask}
                         changeFilter={changeFilter}
                         addTask={addTask}

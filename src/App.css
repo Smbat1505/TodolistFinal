@@ -3,6 +3,8 @@
     display: flex;
     justify-content: center;
     margin: 100px auto;
+    flex-wrap: wrap;
+    align-items: baseline;
 }
 
 .App > div {
