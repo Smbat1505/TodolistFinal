@@ -1,14 +1,14 @@
-import React, {ReactNode} from 'react';
+import React, {memo, ReactNode} from 'react';
 import "./Button.css"
 
 type ButtonPropsType = {
     name?: string;
     children?: ReactNode;
     className?: string;
-    callback: ()=>void;
+    callback: () => void;
 }
 
-export const Button: React.FC<ButtonPropsType> = (
+export const Button: React.FC<ButtonPropsType> = memo((
     {
         name,
         children,
@@ -20,9 +20,12 @@ export const Button: React.FC<ButtonPropsType> = (
     function handleOnClick() {
         callback()
     }
+
+    console.log('Button')
+
     return (
         <>
             <button className={className} onClick={handleOnClick}>{children} {name}</button>
         </>
     )
-}
+})
