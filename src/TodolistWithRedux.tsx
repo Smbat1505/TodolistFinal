@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useMemo, useState} from 'react';
 import {Input} from "./components/Input";
 import {Button} from "./components/Button";
 import "./todolist.css"
@@ -28,8 +28,6 @@ export const TodolistWithRedux: React.FC<TodolistPropsType> = memo((
         todolist
     }
 ) => {
-
-    console.log('rerender: TodolistWithRedux')
 
     const {id, title, filter} = todolist;
 
@@ -76,13 +74,25 @@ export const TodolistWithRedux: React.FC<TodolistPropsType> = memo((
         dispatch(removeTaskAC(id, taskId))
     }, [id, dispatch])
 
+    // let TASKS = tasks;
+    // if (filter === 'active') {
+    //     TASKS = TASKS.filter(task => !task.isDone)
+    // }
+    // if (filter === 'completed') {
+    //     TASKS = TASKS.filter(task => task.isDone)
+    // }
+
     let TASKS = tasks;
-    if (filter === 'active') {
-        TASKS = TASKS.filter(task => !task.isDone)
-    }
-    if (filter === 'completed') {
-        TASKS = TASKS.filter(task => task.isDone)
-    }
+    TASKS = useMemo(()=> {
+        if (filter === 'active') {
+            TASKS = TASKS.filter(task => !task.isDone)
+        }
+        if (filter === 'completed') {
+            TASKS = TASKS.filter(task => task.isDone)
+        }
+
+        return TASKS
+    }, [TASKS, filter])
 
 
     return (

@@ -6,7 +6,6 @@ type EditableSpanPropsType = {
     onChange: (newTitle: string) => void;
 }
 export const EditableSpan: React.FC<EditableSpanPropsType> = memo(({oldTitle, onChange}) => {
-    console.log('EditableSpan')
     const [editMode, setEditMode] = useState<boolean>(false);
     const [newTitle, setNewTitle] = useState<string>(oldTitle);
 

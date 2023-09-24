@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useMemo, useState} from 'react';
 import {Input} from "./components/Input";
 import {Button} from "./components/Button";
 import "./todolist.css"
@@ -87,12 +87,17 @@ export const Todolist: React.FC<TodolistPropsType> = memo((
 
 
     let TASKS = tasks;
-    if (filter === 'active') {
-        TASKS = TASKS.filter(task => !task.isDone)
-    }
-    if (filter === 'completed') {
-        TASKS = TASKS.filter(task => task.isDone)
-    }
+    TASKS = useMemo(()=> {
+        if (filter === 'active') {
+            TASKS = TASKS.filter(task => !task.isDone)
+        }
+        if (filter === 'completed') {
+            TASKS = TASKS.filter(task => task.isDone)
+        }
+
+        return TASKS
+    }, [TASKS, filter])
+
 
     return (
 
