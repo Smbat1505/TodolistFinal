@@ -1,40 +1,37 @@
 import React, {ChangeEvent, memo, useCallback} from 'react';
-import {Button} from "./Button";
-import {EditableSpan} from "./EditableSpan";
-import {Input} from "./Input";
-import {TaskType} from "../TodolistWithRedux";
+import {Button} from "../Button/Button";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
+import {Input} from "../Input/Input";
+import {TaskType} from "../../TodolistWithRedux";
 import {useDispatch} from "react-redux";
+import {changeTaskStatusAC, removeTaskAC, updateTaskAC} from "../../reducers/taskReducer";
 
 
-type TaskPropsType = {
+type TaskWithReduxPropsType = {
     task: TaskType;
-    updateTask: (taskID: string, newTitle: string) => void;
-    changeTaskStatus: (taskId: string, newIsDoneValue: boolean) => void;
-    removeTask: (taskId: string) => void;
-
+    todolistId: string;
 }
-export const Task: React.FC<TaskPropsType> = memo((
+export const TaskWithRedux: React.FC<TaskWithReduxPropsType> = memo((
     {
         task,
-        updateTask,
-        changeTaskStatus,
-        removeTask
+        todolistId
     }
 ) => {
 
+    const dispatch = useDispatch()
 
-    function handleOnClick() {
-        removeTask(task.id)
+    const handleOnClick = () => {
+        dispatch(removeTaskAC(todolistId, task.id))
     }
 
     const handleUpdateTask = (taskID: string, newTitle: string) => {
-        updateTask(taskID, newTitle)
+        dispatch(updateTaskAC(todolistId, taskID, newTitle))
     }
 
     const handleOnChangeCheckbox = (taskId: string) => {
         return (e: ChangeEvent<HTMLInputElement>) => {
             let newIsDoneValue = e.currentTarget.checked;
-            changeTaskStatus(taskId, newIsDoneValue);
+            dispatch(changeTaskStatusAC(todolistId, taskId, newIsDoneValue));
         }
     }
 

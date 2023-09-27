@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 
 
-type EditableSpanPropsType = {
+export type EditableSpanPropsType = {
     oldTitle: string;
     onChange: (newTitle: string) => void;
 }

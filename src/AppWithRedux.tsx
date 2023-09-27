@@ -2,7 +2,7 @@ import React, {Reducer, useCallback, useReducer, useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
-import AddItemForm from "./components/AddItemForm";
+import AddItemForm from "./components/AddItemForm/AddItemForm";
 import {
     addTaskAC,
     changeTaskStatusAC,
@@ -34,7 +34,7 @@ export type TasksStateType = {
     [key: string]: TaskType[];
 }
 
-function AppWithReducer() {
+function AppWithRedux() {
     const todolistId1 = v1();
     const todolistId2 = v1();
 
@@ -98,20 +98,11 @@ function AppWithReducer() {
             {todolists.map(todo => {
                 return (
                     <TodolistWithRedux key={todo.id} todolist={todo}/>
-                    // <Todolist
-                    //     key={todo.id}
-                    //     todolistID={todo.id}
-                    //     title={todo.title}
-                    //     tasks={tasks[todo.id]}
-                    //     removeTask={removeTask}
-                    //     changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeTaskStatus}
-                    //     filter={todo.filter} removeTodolist={removeTodolist} updateTask={updateTask}
-                    //     updateTodolistTitle={updateTodolistTitle}
-                    // />
+
                 )
             })}
         </div>
     );
 }
 
-export default AppWithReducer;
+export default AppWithRedux;

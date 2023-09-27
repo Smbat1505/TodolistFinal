@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
-import {Input} from "./Input";
-import {Button} from "./Button";
+import {Input} from "../Input/Input";
+import {Button} from "../Button/Button";
 
 
 export type AddItemFormPropsType = {
@@ -43,7 +43,7 @@ const AddItemForm: React.FC<AddItemFormPropsType> = memo(({callback}) => {
 
             />
             <Button
-                name={'add'}
+                name={'+ add'}
                 callback={handleAddTask}
                 className={'add-button'}
             />

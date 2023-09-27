@@ -1,16 +1,16 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useMemo, useState} from 'react';
-import {Input} from "./components/Input";
-import {Button} from "./components/Button";
+import {Input} from "./components/Input/Input";
+import {Button} from "./components/Button/Button";
 import "./todolist.css"
 import {FilterValueType} from "./App";
-import AddItemForm from "./components/AddItemForm";
-import {EditableSpan} from "./components/EditableSpan";
+import AddItemForm from "./components/AddItemForm/AddItemForm";
+import {EditableSpan} from "./components/EditableSpan/EditableSpan";
 import {TodolistType} from "./AppWithRedux";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
 import {addTaskAC, changeTaskStatusAC, removeTaskAC, updateTaskAC} from "./reducers/taskReducer";
 import {changeFilterAC, removeTodolistAC, updateTodolistTitleAC} from "./reducers/todolistsReducer";
-import {TaskWithRedux} from "./components/TaskWithRedux";
+import {TaskWithRedux} from "./components/Task/TaskWithRedux";
 
 export type TaskType = {
     id: string;
@@ -94,10 +94,8 @@ export const TodolistWithRedux: React.FC<TodolistPropsType> = memo((
         return TASKS
     }, [TASKS, filter])
 
-
+    // if (!TASKS) return <div>No tasks available.</div>;
     return (
-
-
         <div>
             <h3>
                 <EditableSpan oldTitle={title} onChange={handleUpdateTodolistTitle}/>
@@ -112,6 +110,7 @@ export const TodolistWithRedux: React.FC<TodolistPropsType> = memo((
             <AddItemForm callback={handleAddTask}/>
             <ul>
                 {TASKS.map(task => {
+
 
                     return (
                         <TaskWithRedux

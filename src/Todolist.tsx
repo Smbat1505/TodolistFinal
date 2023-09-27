@@ -1,11 +1,11 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useMemo, useState} from 'react';
-import {Input} from "./components/Input";
-import {Button} from "./components/Button";
+import {Input} from "./components/Input/Input";
+import {Button} from "./components/Button/Button";
 import "./todolist.css"
 import {FilterValueType} from "./App";
-import AddItemForm from "./components/AddItemForm";
-import {EditableSpan} from "./components/EditableSpan";
-import {Task} from "./components/Task";
+import AddItemForm from "./components/AddItemForm/AddItemForm";
+import {EditableSpan} from "./components/EditableSpan/EditableSpan";
+import {Task} from "./components/Task/Task";
 
 export type TaskType = {
     id: string;
